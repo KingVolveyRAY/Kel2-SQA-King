@@ -102,19 +102,26 @@ x₂ = (8 - √16) / 4 = 1
 
 ## 2. Analisis Proyek Spring Boot
 
-### Repository open source
+### Repository open source yang dirujuk
 
-Repository yang digunakan untuk referensi proyek adalah:
+Repository yang diminta untuk dicantumkan pada tugas adalah:
 
 **[spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic)**
 
-Package dan method yang dianalisis pada tugas ini:
+Namun, repository tersebut tidak mendefinisikan package `io.spring.application.user` atau
+method `UserService.registerUser(...)`. Oleh karena itu, bagian ini bukan klaim bahwa
+method tersebut berasal dari Petclinic. Kode dan analisis berikut adalah contoh mandiri
+yang diberikan pada soal, sedangkan link Petclinic dicantumkan sebagai repository open
+source yang dirujuk untuk konteks tugas.
+
+Package dan method pada contoh soal:
 
 - Package: `io.spring.application.user`
 - Class: `UserService`
 - Method: `registerUser(...)`
 
-> Analisis branch di bawah mengikuti struktur validasi `registerUser(...)` yang diberikan pada soal.
+> Analisis branch di bawah mengikuti struktur validasi `registerUser(...)` yang diberikan pada soal
+> dan tidak dimaksudkan untuk dieksekusi terhadap source tree Petclinic.
 
 ### Struktur logika method
 
