@@ -7,6 +7,7 @@ Website portfolio statis Muhammad Rayhan Ramadhan. Situs ini menampilkan profil,
 - Hero section dan ringkasan profil.
 - Pengalaman, pendidikan, sertifikat, keahlian, dan kontak.
 - Navigasi mobile tanpa dependensi JavaScript tambahan.
+- Dark mode dengan preferensi yang tersimpan di browser.
 - Deploy otomatis ke GitHub Pages melalui GitHub Actions.
 
 ## Teknologi
