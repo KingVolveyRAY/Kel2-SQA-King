@@ -1,4 +1,4 @@
-# gaji_john_v1.py -- DRAFT AWAL (belum direview)
+# gaji_john_v1.py
 # Soal John Travolta: gaji mingguan + lembur, lalu cek tabungan
 
 jam = int(input("Jam kerja minggu ini: "))
