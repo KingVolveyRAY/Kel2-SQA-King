@@ -16,29 +16,33 @@ class CalculatorTest {
 
     @BeforeEach
     void setUp() {
+        // Arrange: Diinisialisasi ulang sebelum setiap method @Test dijalankan
         calculator = new Calculator();
     }
 
     @AfterEach
     void tearDown() {
+        // Membersihkan objek setelah setiap tes selesai
         calculator = null;
     }
 
     @Test
     @DisplayName("1. Uji Penjumlahan Dua Bilangan Positif")
     void testTambah() {
+        // Act
         int hasil = calculator.tambah(15, 25);
+        // Assert
         assertEquals(40, hasil, "15 + 25 seharusnya menghasilkan 40");
     }
 
     @Test
-    @DisplayName("2. Uji Pengurangan dan Perkalian Berkelompok (assertAll)")
+    @DisplayName("2. Uji Pengurangan dan Perkalian Secara Berkelompok (assertAll)")
     void testKurangDanKali() {
         assertAll("Operasi Aritmatika Dasar",
-            () -> assertEquals(10, calculator.kurang(25, 15)),
-            () -> assertEquals(-5, calculator.kurang(10, 15)),
-            () -> assertEquals(50, calculator.kali(10, 5)),
-            () -> assertEquals(0, calculator.kali(99, 0))
+            () -> assertEquals(10, calculator.kurang(25, 15), "25 - 15 harus 10"),
+            () -> assertEquals(-5, calculator.kurang(10, 15), "10 - 15 harus -5"),
+            () -> assertEquals(50, calculator.kali(10, 5), "10 * 5 harus 50"),
+            () -> assertEquals(0, calculator.kali(99, 0), "Perkalian dengan 0 harus 0")
         );
     }
 
@@ -54,7 +58,8 @@ class CalculatorTest {
     void testBagiDenganNol() {
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
-            () -> calculator.bagi(10, 0)
+            () -> calculator.bagi(10, 0),
+            "Pembagian dengan nol harus melempar IllegalArgumentException"
         );
         assertEquals("Pembagi tidak boleh bernilai nol (0)!", exception.getMessage());
     }
@@ -62,8 +67,8 @@ class CalculatorTest {
     @Test
     @DisplayName("5. Uji Pengecekan Bilangan Genap dan Ganjil")
     void testApakahGenap() {
-        assertTrue(calculator.apakahGenap(12));
-        assertFalse(calculator.apakahGenap(13));
+        assertTrue(calculator.apakahGenap(12), "12 adalah bilangan genap");
+        assertFalse(calculator.apakahGenap(13), "13 adalah bilangan ganjil");
     }
 
     @ParameterizedTest(name = "Nilai {0} menghasilkan Grade {1}")
@@ -80,7 +85,7 @@ class CalculatorTest {
     }
 
     @Test
-    @DisplayName("7. Uji Nilai Mahasiswa di Luar Rentang Valid")
+    @DisplayName("7. Uji Nilai Mahasiswa di Luar Rentang (Negatif atau Lebih dari 100)")
     void testTentukanGradeTidakValid() {
         assertThrows(IllegalArgumentException.class, () -> calculator.tentukanGrade(-5));
         assertThrows(IllegalArgumentException.class, () -> calculator.tentukanGrade(105));
