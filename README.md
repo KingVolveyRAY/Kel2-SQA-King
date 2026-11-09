@@ -13,8 +13,8 @@ Repositori ini berisi implementasi sampel pengujian unit (*unit testing*) menggu
 
 | Keterangan | Detail |
 | :--- | :--- |
-| **Nama Mahasiswa** | Muhammad Rayhan Ramadhan |
-| **NIM** | 12409011010003 |
+| **Nama Mahasiswa** | Muhammad Rayhan Ramadhan | Azka Azfar | Arya Putra Fachreza |
+| **NIM** | 12409011010003 | 12409011010008 | 12409011010005
 | **Program Studi** | Teknik Informatika — UIN Syarif Hidayatullah Jakarta |
 | **Dosen Pengampu** | Pak Broer |
 | **Topik Tugas** | Analisis 5W+1H JUnit, Studi Literatur Tesis Selenium, & Implementasi Sample JUnit 5 |
