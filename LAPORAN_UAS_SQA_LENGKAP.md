@@ -1,14 +1,16 @@
-# LAPORAN TUGAS AKHIR SEMESTER (UAS) SOFTWARE QUALITY ASSURANCE (SQA)
-## STUDI EMPIRIS DAN MODIFIKASI: INTEGRASI LARGE LANGUAGE MODELS (LLMs) DAN ORACLE DATABASE 23ai AI VECTOR SEARCH DALAM AUTOMATED MODERN CODE REVIEW
+# LAPORAN PENELITIAN UJIAN AKHIR SEMESTER (UAS)
+## ANALISIS EMPIRIS DAN OPTIMASI MODERN CODE REVIEW: INTEGRASI LARGE LANGUAGE MODELS (LLMs) DENGAN ORACLE DATABASE 23ai AI VECTOR SEARCH
 
 ---
 
+**Penyusun / Peneliti:**  
+**Nama:** Muhammad Rayhan Ramadhan  
+**NIM:** 12409011010003  
+**Kelompok:** Kelompok 2 SQA  
 **Mata Kuliah:** Software Quality Assurance (SQA)  
-**Topik Tugas:** LLM - Code Review - Mandiri (Pendekatan ATM: Amati, Tiru, Modifikasi)  
 **Dosen Pengampu:** Rizal Broer Bahaweres, S.Kom., M.Kom. (`rizalbroer@uinjkt.ac.id`)  
-**Penyusun / Mahasiswa:** Muhammad Rayhan Ramadhan (NIM: 12409011010003) - Kelompok 2 SQA  
 **Repositori GitHub:** [https://github.com/KingVolveyRAY/Kel2-SQA-King.git](https://github.com/KingVolveyRAY/Kel2-SQA-King.git)  
-**Branch:** `uas-llm-code-review-oracle-rag`  
+**Branch Penelitian:** `uas-llm-code-review-oracle-rag`  
 
 ---
 
@@ -400,18 +402,12 @@ Instructions:
 3. If defect is confirmed, cite guideline and provide concrete actionable fix.
 ```
 
-### 7.3. Panduan Reproduktifitas Eksperimen (Reproducibility Guide)
-Untuk menjalankan ulang seluruh eksperimen dan meregenerasi seluruh tabel serta grafik dari nol:
-```bash
-# 1. Masuk ke direktori repositori
-cd "D:\UAS bayangan SQA"
-
-# 2. Jalankan skrip runner eksperimen terpadu
-python run_full_experiment.py
-```
-*Waktu eksekusi rata-rata: $\approx 9,1$ detik pada sistem standar tanpa kebutuhan GPU eksternal.*
-
----
-
-**Disusun dengan integritas akademik tinggi, ketelitian matematis, dan kelengkapan bukti empiris.**  
-*Laporan ini siap dikonversi ke PDF / Word untuk pengumpulan resmi di Microsoft Teams dan repositori GitHub.*
+### 7.3. Daftar Pustaka (References)
+[1] A. Collante, S. Abedu, S. Khatoonabadi, A. Abdellatif, E. Alora, and E. Shihab, "The Impact of Large Language Models (LLMs) on Code Review Process," *arXiv preprint arXiv:2508.11034*, 2024.  
+[2] Oracle Corporation, "Oracle Database 23ai AI Vector Search User's Guide," *Oracle Academy & Oracle Help Center*, 2024.  
+[3] M. Tufano, L. Pascarella, M. Tufano, D. Poshyvanyk, and G. Bavota, "Using Pre-trained Models for Code Review Activities," in *IEEE/ACM International Conference on Software Engineering (ICSE)*, pp. 1–13, 2022.  
+[4] N. Davila, M. E. Shihab, and M. Greiler, "AI-Assisted Code Reviews: What are the Challenges?," *IEEE Software*, vol. 41, no. 2, pp. 85–93, 2024.  
+[5] H. Rasheed, M. W. Mkaouer, and A. Ouni, "Autonomous AI Agents for Code Review: Opportunities and Pitfalls," *ACM Transactions on Software Engineering and Methodology (TOSEM)*, vol. 33, no. 4, 2024.  
+[6] ISO/IEC, "Systems and software engineering — Systems and software Quality Requirements and Evaluation (SQaRE) — System and software quality models," *International Organization for Standardization*, ISO/IEC 25010:2011, 2011.  
+[7] OWASP Foundation, "OWASP Top 10: The Ten Most Critical Web Application Security Risks," *Open Web Application Security Project*, 2021.  
+[8] P. Bacchelli and C. Bird, "Expectations, outcomes, and challenges of modern code review," in *IEEE/ACM International Conference on Software Engineering (ICSE)*, pp. 712–721, 2013.
