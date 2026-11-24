@@ -1,0 +1,1336 @@
+--- OA Page 2 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its affiliates. 
+Other names may be trademarks of their respective owners.
+Introduction to Vector Search with Oracle 
+Database 23ai
+
+--- OA Page 3 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Objectives
+• This lesson covers the following objectives:
+• What are Vectors
+• How AI Vector Search Works
+• Generating and Searching Vectors
+• Vector Indexes
+• Retrieval Augmented Generation (RAG)
+• Agentic RAG
+• Integration
+3
+
+--- OA Page 4 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Vectors
+4
+
+--- OA Page 5 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+What is a Vector, 1 of 2
+• A vector is a set of numbers 
+that represents something
+• A vector lives in a vector 
+space which can have many 
+dimensions
+5
+
+--- OA Page 6 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+What is a Vector, 2 of 2
+• These red dots can be represented by the 
+following vectors in 2-dimensional space:
+• [1, 1]
+• [3, 5]
+• [8, 2]
+• [5, -3]
+• [-6, -6]
+• [-8, 7]
+• Vectors can also be used to represent 
+complex things like text, images, audio 
+and videos
+6
+
+--- OA Page 7 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Why use Vectors
+• In computer science, it is easy to 
+search and sort scalar things like 
+numbers, strings, dates and times
+• It has traditionally been difficult to 
+search and sort unstructured data 
+like text, images, audio and video
+• If you encode unstructured data as 
+vectors, you could then use vector 
+distance functions to determine 
+how similar these things are
+7
+
+--- OA Page 8 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Distance Functions
+• A fundamental operation in vector search is to be able to determine 
+how close, or how similar vectors are to each other
+• There are various mathematical distance functions of doing this:
+• Euclidean Distance
+• Manhattan Distance
+• Cosine Distance 
+• Dot Distance
+• Hamming Distance
+• To get the best vector similarity search results, you want to use the 
+same distance function that the vector embedding models used
+• Similarity search is a way to find similarities using a vector distance 
+8
+
+--- OA Page 9 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+The Embedding Model determines the 
+Distance Function
+• Vector embedding models are pre-trained neural networks
+• The neural network uses a specific distance function during 
+training
+• Neural networks are a core technology in Artificial Intelligence (AI) 
+and Machine Learning
+• They are computational models inspired by the way the human 
+brain works, designed to recognize patterns and relationships in 
+data.
+9
+
+--- OA Page 10 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Embedding Models and LLMs
+• Vector embedding models are NOT LLMs
+• Vector embedding models ONLY encode inputs (text, audio, 
+images or video) to generate vectors
+• LLMs usually generate some non-vector output (text, images, 
+audio, video or code)
+• Vector embedding models tend to be much less resource 
+intensive than LLMs
+10
+
+--- OA Page 11 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Oracle brings AI to the enterprise at 
+every layer of the stack
+• This section focuses on  
+how we bring AI to data
+11
+
+--- OA Page 12 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Database 23ai 
+includes many 
+AI Capabilities
+12
+
+--- OA Page 13 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Find revenue by products
+• Databases are great at querying 
+business data that is stored as 
+strings, numbers, and dates
+13
+
+--- OA Page 14 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Find products that match a 
+photo or description, 1 of 2
+• Enterprises are facing a 
+growing volume of 
+unstructured business 
+data, which databases 
+haven’t been good at 
+querying as it must be 
+searched by semantics
+14
+
+--- OA Page 15 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Find products that match a 
+photo or description, 2 of 2
+• Semantic content refers to the 
+meaning or conceptual information 
+that a piece of data (such as text, 
+images, or audio) conveys
+• When data is converted into an AI 
+vector using an embedding model, 
+the resulting vector captures key 
+characteristics about the meaning 
+and context of the original data, 
+rather than just its literal 
+representation
+15
+
+--- OA Page 16 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search, 1 of 6
+• AI Vector Search is a  
+new breakthrough 
+technology to help 
+find similar 
+documents, images, 
+and other 
+unstructured data 
+based on their 
+semantic content, 
+rather than their 
+words or pixels
+16
+
+--- OA Page 17 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search, 2 of 6
+• An AI Vector is a sequence of 
+numbers, called dimensions, that 
+represent the semantic content of 
+a document, image, or video
+• Developers create a vector for an 
+object by just passing the object to 
+a built-in vectorization function
+• Oracle 23ai natively stores vectors 
+and compares vectors to find 
+objects with similar semantic 
+content
+17
+
+--- OA Page 18 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Mathematical Distance 
+• The main operation on vectors is the Mathematical Distance 
+between them
+There are many mathematical  distance formulas
+18
+
+--- OA Page 19 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search, 3 of 6
+• Now that we know what vectors are, let’s talk about how they are 
+used
+• Vector Search works best when combined with relational search 
+to solve business problems
+19
+
+--- OA Page 20 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search, 4 of 6
+AI Vector Search - Searches on a combination of business and semantic data and is more 
+effective if both types of data are stored together
+• One solution is to continuously 
+send your business data to a 
+vector database
+• However, the business data that 
+is relevant to a question varies 
+widely
+• Plus, dedicated vector databases 
+are not good at searching or 
+securing business data
+20
+
+--- OA Page 21 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search, 5 of 6
+Better Together: Business Data and Business Vectors 
+• AI Vector Search uniquely combines 
+sophisticated Business Data Search 
+with Vector Similarity Search using 
+simple SQL
+• There is no need to move and 
+synchronize data, manage multiple 
+products, etc.
+• Oracle Database’s robust security 
+controls ensure compliance with 
+corporate security standards 
+21
+
+--- OA Page 22 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search, 6 of 6
+• Every mission-critical feature of
+Oracle Database works transparently 
+with AI Vector Search
+• This allows AI Vectors to be used 
+immediately in enterprise apps of 
+any scale or criticality
+22
+
+--- OA Page 23 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+How Oracle AI Vector Search Works
+23
+
+--- OA Page 24 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search Highlights
+• Generate vector embeddings from 
+unstructured data 
+• Store vectors in table columns using 
+new VECTOR type
+• Perform AI Vector Search on 
+VECTOR columns using SQL
+• Build approximate vector indexes 
+on VECTOR columns
+• Integrate with Mission-Critical 
+Enterprise Capabilities
+24
+
+--- OA Page 25 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Let's look at an example..
+• Imagine a house-hunting app 
+that helps customers find 
+houses for sale that are 
+similar to a picture the 
+customer uploads
+25
+
+--- OA Page 26 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+This is easy with 
+Oracle Database 23ai
+• Finding a good match 
+requires combining semantic 
+picture search with searches 
+on business data including:
+• Customer data such as the 
+customer's preferred city and 
+budget
+• Product data such as 
+houses available for sale in 
+each city and their price
+26
+
+--- OA Page 27 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+House photos are converted into vectors and 
+stored with house metadata 
+CREATE TABLE House_for_Sale (id                       number, 
+                             price                    number,
+                             city               varchar2(400),
+ 
+ 
+ 
+ 
+house_desc         varchar2(500),
+                             house_photo                 blob,
+ 
+ 
+ 
+ 
+ 
+   house_vector VECTOR(728, FLOAT32);  
+• Format for dimension values can be FLOAT32, FLOAT64, INT8, 
+and BINARY
+• Additional formats coming ... 
+27
+
+--- OA Page 28 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Generate Vectors
+28
+
+--- OA Page 29 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+What is Vector Generation or Embedding? 
+1 of 2
+• Vector Generation or Embedding is the process of converting 
+unstructured data (text, images, etc.) into vectors
+• Vectors are generated using deep-learning embedding models
+• Vector embedding models can be obtained commercially, from 
+Open Source, or can be created
+29
+
+--- OA Page 30 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+What is Vector Generation or Embedding? 
+2 of 2
+• There may be no BEST embedding model, and different data 
+may need different models
+• No one size fits all
+• Evaluate a model based on your data
+• Larger documents are often chunked before being vectorized
+30
+
+--- OA Page 31 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Example: 
+The features for a house image could be..
+• Each dimension 
+(number), 
+represents a 
+different feature 
+of the house
+31
+
+--- OA Page 32 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Embedding Generation | Your Way
+AI Vector Search offers 4 alternatives for vector embedding generation
+1
+Use 
+Pre-created 
+embeddings
+Load vectors directly 
+from external files 
+into database into 
+VECTOR columns 
+or map the data as 
+external tables
+2
+Use an external 
+embedding 
+cloud-service
+Generate embeddings 
+using external callouts 
+via the 
+UTL_TO_EMBEDDING() 
+function in the 
+DBMS_VECTOR package
+3
+Use an external 
+embedding 
+library in the 
+mid-tier
+Generate embeddings 
+using a language -
+specific function calls
+These embedding 
+libraries can be from 
+HuggingFace or use 
+the ONNX Runtime
+4
+Use a database 
+resident 
+embedding model
+Generate embeddings 
+using the 
+VECTOR_EMBEDDING() 
+SQL function using an 
+imported ONNX 
+embedding model so 
+that no data leaves 
+the database
+32
+
+--- OA Page 33 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Searching Vectors
+33
+
+--- OA Page 34 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+House vectors when collapsed into 2 dimensions 
+instead of hundreds could look like this
+34
+
+--- OA Page 35 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+The distance between the vectors is 
+proportional to their semantic similarity
+35
+
+--- OA Page 36 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Finding a good match, 1 of 1
+• Finding a good match requires combining semantic picture 
+search with searches on business data
+• Example 1:
+Find the top matching houses 
+compared to my photo
+SELECT …
+FROM   House_for_Sale
+ORDER BY VECTOR_DISTANCE(house_vector, :search_vector)
+FETCH FIRST 10 ROWS ONLY  ;  
+36
+
+--- OA Page 37 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Finding a good match, 2 of 2
+• Finding a good match requires combining semantic picture 
+search with searches on business data
+• Example 2:
+Find the top matching houses in my city 
+and within my budget
+SELECT …
+FROM   House_for_Sale
+WHERE  city = (SELECT search_city from customer …)
+AND    price <= (SELECT budget from customer …)
+ORDER BY VECTOR_DISTANCE(house_vector, :search_vector)
+FETCH FIRST 10 ROWS ONLY ;  
+• Combines relational, and 
+AI search in 6 lines of SQL! 
+• Ultra simple and powerful 
+with nothing new to learn
+• All data is fully consistent 
+• Single integrated solution
+37
+
+--- OA Page 38 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Search Plan | Similarity Search
+SELECT id
+FROM   House_for_Sale
+ORDER BY VECTOR_DISTANCE (house_vector, :search_vector)
+FETCH FIRST 10 ROWS ONLY;  
+38
+
+--- OA Page 39 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Indexes 
+• Vector indexes enable rapid similarity search within tables 
+containing vector data
+An exhaustive search for top-K 
+matches will be100% accurate 
+but slow as data volumes grow
+Vector indexes trade-off 
+some search accuracy for 
+100x speed up
+39
+
+--- OA Page 40 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Indexing Vectors
+40
+
+--- OA Page 41 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Indexes in Oracle Database 23ai
+• Vector indexes in Oracle Database 23ai are specialized index structures 
+designed to efficiently support vector search—finding and ranking data 
+based on the similarity of AI embeddings, rather than just exact matches or 
+traditional ordering
+Neighbor Graph 
+Vector Indexes
+Neighbor Partition
+Vector Indexes
+Hybrid 
+Vector Indexes
+41
+
+--- OA Page 42 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Indexes | Neighbor Graph Vector Index
+• Graph-based index where vertices represent vectors 
+and edges between vertices represent similarity
+• In-Memory only index – highly efficient for both 
+accuracy and speed
+CREATE VECTOR INDEX house_idx 
+ON house_for_sale(house_vector)
+ORGANIZATION INMEMORY NEIGHBOR GRAPH 
+DISTANCE EUCLIDEAN;
+• The DISTANCE clause is optional (the default is COSINE)
+• As a rule of thumb, the distance function should be chosen 
+based on the embedding model used to generate the vectors 
+42
+
+--- OA Page 43 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Search SQL | Similarity Search 
+with HNSW Index
+SELECT id
+FROM   House_for_Sale
+ORDER BY VECTOR_DISTANCE (house_vector, :search_vector)
+FETCH APPROX FIRST 10 ROWS ONLY;  
+43
+
+--- OA Page 44 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Index Creation 
+CREATE VECTOR INDEX incident_idx ON support_incidents(incident_vector)
+ORGANIZATION INMEMORY NEIGHBOR GRAPH
+DISTANCE EUCLIDEAN | COSINE_SIMILARITY | HAMMING ...
+TARGET ACCURACY [<percent> | <Low Level Parameters such as efConstruction, nClusters, etc>]
+TARGET ACCURACY: Specify the default accuracy (recall) when 
+the index is used
+• Easiest for users to specify accuracy as a percent instead of index 
+algorithm parameters
+• Continuous calibration used to map target accuracy to low level 
+parameter values
+• Specialists can still specify low-level parameters if they want
+44
+
+--- OA Page 45 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+VECTOR Memory Pool
+A region of the SGA to store Vector indexes
+• This new pool inside the SGA stores 
+the HNSW graph and the vectors 
+themselves
+• It also, stores metadata for IVF 
+indexes 
+• E.g., the CENTROIDS table is stored in 
+a SIMD-friendly format for faster 
+index creation and DML maintenance
+• Can be specified using 
+VECTOR_MEMORY_SIZE parameter
+45
+
+--- OA Page 46 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Index | Memory Advisor, 1 of 3
+• A common question from customers is: “What should be the 
+size of the Vector Memory Pool”?
+• On Autonomous Database, this pool is managed automatically 
+and can grow/shrink elastically
+• On customer-managed deployments, a new Memory Advisor 
+helps with this decision
+• A new procedure in the DBMS_VECTOR PLSQL package 
+(index_vector_memory_advisor) estimates the memory 
+footprint of a vector index
+• It uses information such as the dimension count/format of the 
+indexed VECTOR column and specified index creation parameters 
+such as: efConstruction, neighbors, partitions, Accuracy, etc.
+46
+
+--- OA Page 47 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Index | Memory Advisor, 2 of 3
+Example 1: HNSW Index Memory Estimation
+SQL> exec dbms_vector.index_vector_memory_advisor(INDEX_TYPE     => 'HNSW', 
+                                                  NUM_VECTORS    => 10000, 
+                                                  DIM_COUNT      => 768,
+                                                  DIM_TYPE       => 'FLOAT32',
+                                                  PARAMETER_JSON => '{"neighbors":32}',
+                                                  RESPONSE_JSON  => :response_json);
+Suggested vector memory pool size: 59918628 Bytes
+47
+
+--- OA Page 48 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Index | Memory Advisor, 3 of 3
+Example 2: HNSW Index Memory Estimation for an existing table
+SQL> exec dbms_vector.index_vector_memory_advisor(TABLE_OWNER    => 'SCOTT',
+ 
+ 
+ 
+ 
+ 
+ 
+      TABLE_NAME     => 'HOUSE_FOR_SALE',
+ 
+ 
+ 
+ 
+ 
+ 
+      COLUMN_NAME    => 'HOUSE_VECTOR',
+ 
+ 
+ 
+ 
+ 
+   
+      INDEX_TYPE     => 'HNSW', 
+ 
+ 
+ 
+ 
+ 
+ 
+      PARAMETER_JSON => '{"neighbors":32}',
+                                                  RESPONSE_JSON  => :response_json);
+Suggested vector memory pool size: 59918628 Bytes
+48
+
+--- OA Page 49 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Transactions | Neighbor Graph Index (HNSW), 
+1 of 2
+• HNSW Vector Index supports Transactions
+• Transaction Journals record DML changes
+• An in-memory Private Journal tracks changes of active transactions
+• Changes are flushed to an on-disk Shared Journal at the transaction 
+commit
+• Queries consult the Journals along with the HNSW graph 
+ for transactionally consistent results
+• Rich support for Attribute Filtering – enables combined value-based and 
+semantic searches
+• HNSW graph is periodically refreshed to keep query latency bounded
+• Full integration with Oracle RAC
+49
+
+--- OA Page 50 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Transactions | Neighbor Graph Index (HNSW), 
+2 of 2
+• Top K Transactionally-Consistent Query w/ HNSW Vector Index
+50
+
+--- OA Page 51 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Indexes – 
+Neighbor Partition Vector Index
+• Partition-based index with vectors clustered into table partitions 
+based on similarity
+• Efficient scale-out index for unlimited data size
+CREATE VECTOR INDEX house_idx 
+ON house_for_sale(house_vector)
+ORGANIZATION NEIGHBOR PARTITIONS 
+DISTANCE EUCLIDEAN;
+• Neighbor Partition Vector Indexes (e.g., IVF indexes) 
+also support LOCAL indexing on partitioned tables
+• Build a vector index on each partition
+• Filter by Partition Keys
+• Perform Vector Search on qualifying index partitions
+51
+
+--- OA Page 52 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Hybrid Vector Index | Overview, 1 of 2
+• There are two approaches for 
+searching document data: 
+• Keyword Search: Deterministic 
+and explainable, 
+but does not fully capture 
+document semantics 
+• AI Vector Search: Powerful 
+semantic search technique, but 
+neither deterministic nor 
+explainable
+CREATE HYBRID VECTOR INDEX 
+house_desc_idx ON 
+house_for_sale(house_desc) 
+PARAMETERS('MODEL embed-model');
+ONNX model that was imported 
+into the database earlier 
+52
+
+--- OA Page 53 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Hybrid Vector Index | Overview, 2 of 2
+• Many real-world document searches 
+require both techniques to be 
+combined: 
+• E.g., Find support incidents about 
+"Laptops" that contain the product 
+code "LAPTOP-4421"
+• Requires semantic match (”about 
+Laptops”) plus keyword match 
+(“containing product code LAPTOP-
+4421” )
+• A Hybrid Vector Index combines 
+keyword search with vector search for 
+improved accuracy
+CREATE HYBRID VECTOR INDEX 
+house_desc_idx ON 
+house_for_sale(house_desc) 
+PARAMETERS('MODEL embed-model');
+ONNX model that was imported 
+into the database earlier 
+53
+
+--- OA Page 54 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Hybrid Vector Index | Hybrid Search API, 1 of 2
+• Unlike a traditional index, a Hybrid Vector Index must 
+be explicitly queried via specialized access APIs:
+• APIs for combining the results of searching by text 
+and vectors
+• Example:
+Find the top matching properties with a "water view"
+SELECT DBMS_HYBRID_VECTOR.SEARCH(
+  JSON('{"hybrid_index_name": "MY_HYBRID_IDX",
+         "search_text"      : "water view"
+         }'))
+FROM DUAL;
+Top 10 matches for AI Vector Search and 
+Text Search are fused via INTERSECT, 
+and scores are combined via RSF
+54
+
+--- OA Page 55 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Hybrid Vector Index | Hybrid Search API, 2 of 2
+• Hybrid Search Output
+{
+  "rowid"        : "AK37pKAAkAAAACVAAA",
+  "score"        : 96.95,
+  "vector_score" : 94.50,
+  "text_score"   : 92.40,
+  "vector_rank"  : 1,
+  "text_rank"    : 1,
+  "chunk_text"   : "The house is located on a quarter acre hillside lot with stunning
+                    panoramic views of the bay. Completely unobstructed view of the
+                    water from every bedroom.",
+  ...
+}
+55
+
+--- OA Page 56 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Index | Monitoring Index Status, 1 of 2
+• A new procedure in DBMS_VECTOR PLSQL package 
+(get_index_status) can be used to monitor the status of a 
+Vector Index
+• Especially useful to monitor the progress of index creation which is 
+a long-running operation
+• Stages for HNSW index creation
+• HNSW Index Initialization
+• HNSW Index Graph Allocation
+• HNSW Index Loading Vectors
+• HNSW Index Graph Construction
+• HNSW Index Auxiliary Tables Creation
+56
+
+--- OA Page 57 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Vector Index | Monitoring Index Status, 2 of 2
+• Example: HNSW Index Creation Status
+SQL> exec dbms_vector.get_index_status(OWNER_NAME => 'SCOTT’, 
+                                       INDEX_NAME => 'VIDX_HNSW');
+Owner name: SCOTT
+Index name: VIDX_HNSW
+Index objn: 73364
+Stage: HNSW Index Loading Vectors
+Percentage: 74.43%
+57
+
+--- OA Page 58 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Augmented Generative AI
+58
+
+--- OA Page 59 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Using Generative AI to answer 
+Natural Language Questions
+59
+
+--- OA Page 60 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Why using Generative AI alone is not 
+Good Enough
+• Large Language Models (LLMs) are trained on a broad range of 
+data from the internet
+• However, they are frozen on a past snapshot of the internet with 
+no access to private enterprise data
+• LLMs can also hallucinate (i.e., inaccurate responses)
+• LLMs by themselves therefore often provide poor-quality 
+responses to business specific questions
+60
+
+--- OA Page 61 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Adding Generative AI
+• Oracle 23ai improves Generative AI by augmenting 
+LLM prompts with private database content that is 
+found using any combination of data and AI Vector 
+search
+• It enables LLMs to use business data to produce 
+better and more contextually relevant answers to 
+user questions while keeping business data secure
+• This is called Retrieval Augmented Generation (RAG)
+61
+
+--- OA Page 62 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search in Oracle Database Powers 
+Complete Gen AI Pipeline, 1 of 4
+Retrieval Augmented-Generation (RAG) with your enterprise data
+Vectorize Question
+An end-user's human 
+language question is encoded 
+as a vector
+62
+
+--- OA Page 63 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search in Oracle Database Powers 
+Complete Gen AI Pipeline, 2 of 4
+Retrieval Augmented-Generation (RAG) with your enterprise data
+Find Related Data
+AI Vector Search finds private 
+database data that matches the 
+user's vector including product 
+info and other support tickets for 
+the same laptop
+63
+
+--- OA Page 64 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search in Oracle Database Powers 
+Complete Gen AI Pipeline, 3 of 4
+Retrieval Augmented-Generation (RAG) with your enterprise data
+Augment Prompt
+The user's question 
+is augmented with this private 
+data
+64
+
+--- OA Page 65 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search in Oracle Database Powers 
+Complete Gen AI Pipeline, 4 of 4
+Retrieval Augmented-Generation (RAG) with your enterprise data
+Ask LLM
+The combination is sent to an 
+LLM to provide an informed 
+answer to the question
+65
+
+--- OA Page 66 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Agentic AI Overview
+• AI agents are the building blocks of autonomous AI systems
+• LLMs are extremely powerful but one-shot LLM access can suffer 
+from: 
+• Poor multi-step reasoning 
+• Lack of adaptive capabilities 
+• Hallucination
+• AI applications using LLMs require agentic modules for:
+• Detailed business context from multiple sources
+• Long-term memory for user interactions 
+• Handling dynamic requests with variable outcomes
+• Evaluation and adjustment of outputs, etc. 
+66
+
+--- OA Page 67 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Example of One-Shot RAG limitations
+• Complex questions such as "Does my plan 
+include braces and how much is the 
+deductible?" can be answered badly by one-
+shot RAG
+• E.g., If the LLM bases its answers on the 
+document for the vision plan instead of the 
+dental plan and hallucinates using other 
+irrelevant material
+• With Agentic RAG, the application performs 
+a series of LLM interactions and data 
+retrievals
+67
+
+--- OA Page 68 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Step 1: Decompose user question into 
+multiple sub-questions
+• Example using Agentic RAG
+"Does my plan include 
+braces and how much 
+is the deductible?"
+a) What are the user's plans 
+b) Do any of them cover braces 
+c) If yes, what is the deductible
+Type: Data Retrieval
+Type: Retrieval Augmented Generation
+Type: Retrieval Augmented Generation
+68
+
+--- OA Page 69 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Step 2: Run actions corresponding to 
+sub-question (a)
+Action: Retrieve the user’s plan documents from the HR Database
+Query HR Database 
+for enrolled plans 
+69
+
+--- OA Page 70 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Step 3: Run actions corresponding to 
+sub-question (b)
+Action:  Out of documents retrieved in action (a) find the top K matching the question
+Send question (b) along with the top K plan docs to the LLM
+Use AI Vector Search 
+to find plans related
+to sub-question (b)
+Send sub-question (b) and 
+the Top K plan Docs to LLM
+70
+
+--- OA Page 71 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Step 4: Run actions corresponding to 
+sub-question (c)
+Action: If question (b) didn’t find a plan, return “No plan covers braces” response
+Else, send question (c) with the document returned in question (b) to the LLM 
+No plans found:  Say 
+"no plans cover 
+braces"
+A plan does cover braces: 
+Send sub-question (c) + the plan document to the LLM
+71
+
+--- OA Page 72 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Agentic AI 
+Agentic AI is typically implemented using App-Tier Agentic Frameworks to create agent 
+workflow graphs
+• Agent workflow graphs contain:
+• Reasoning nodes, data retrieval 
+nodes, action nodes, etc.
+• There are many agentic workflow 
+frameworks including OCI Gen AI, GCP 
+Vertex AI, AWS Bedrock, LangGraph, 
+CrewAI, Model Context Protocol, etc. 
+• Oracle is adding extensions/handlers 
+to all these frameworks for Oracle to 
+be a data provider
+72
+
+--- OA Page 73 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Integration
+73
+
+--- OA Page 74 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search | Scale-Out with 
+Real Application Clusters 
+• AI Vector Search 
+transparently scales 
+vector processing across 
+the compute nodes in a 
+RAC cluster with full data 
+consistency
+74
+
+--- OA Page 75 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search | Duplicate HNSW 
+Vector Index on RAC 
+• HNSW Vector Indexes  
+can be duplicated 
+across RAC instances
+• Provides read scalability
+75
+
+--- OA Page 76 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search | Scale-Out with Exadata 
+Smart Storage
+• Oracle AI Vector search can 
+be transparently offloaded 
+to smart Exadata storage for 
+faster search
+76
+
+--- OA Page 77 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search | Scale-Out with Sharding
+• Database native sharding 
+enables planet-scale 
+vector search
+• Sharding can be used 
+both for unlimited scale 
+or data sovereignty
+• Build a Vector Index on 
+each independent shard 
+database 
+77
+
+--- OA Page 78 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Oracle AI Vector Search 
+• Enterprises are already using Oracle AI Vector Search 
+to create innovative new solutions
+Visual Search 
+for Products
+Real-time offer 
+management
+Biometric
+pattern recognition
+Detect Product
+Defects
+78
+
+--- OA Page 79 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Oracle Vector Database
+Better Together: Business Data and Business Vectors
+Enterprise-grade 
+similarity search
+Generating value 
+from unstructured 
+data such as 
+documents, images, 
+and videos 
+Seamlessly combines 
+vectors with 
+business data
+Delivering superior 
+search results to the 
+business without 
+having to move and 
+synchronize data, 
+manage multiple 
+products, etc.
+Secure Retrieval 
+Augmented 
+Generation
+More accurate and 
+contextually relevant 
+AI outcomes 
+leveraging Oracle 
+Database’s robust 
+security controls
+Mission-Critical 
+Reliability and 
+Scalability
+Inherits Oracle's 
+enterprise-grade 
+capabilities, including 
+99.999% availability, 
+scalability and mature 
+governance 
+79
+
+--- OA Page 80 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+AI Vector Search powers 
+Complete Gen AI pipeline
+AI Vector Search in Oracle 23ai Database
+1. Native Database APIs for Gen-AI, from Document Processing to REST 
+call-outs to LLM Providers
+2. Tight integration with 3rd party frameworks such as Langchain
+80
+
+--- OA Page 81 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Learn more…
+• To learn more and try Oracle AI Vector Search yourself
+Oracle Database Free
+oracle.com/database/free/
+Use AI Vector Search 
+to Build GenAI Apps
+youtube.com/watch?v=dmu4KqZKc_8
+Try AI Vector Search 
+on Oracle LiveLabs
+Livelabs.oracle.com
+81
+
+--- OA Page 82 ---
+Copyright © 2025, Oracle and/or its affiliates. Oracle®, Java, MySQL and NetSuite are registered trademarks of Oracle and/or its 
+affiliates. Other names may be trademarks of their respective owners.
+Academy Bytes - Artificial Intelligence (AI) - Hands on Labs - Intermediate
+Introduction to Vector Search with Oracle Database 23ai
+Summary
+• This lesson covered the following items:
+• What are Vectors
+• How AI Vector Search Works
+• Generating and Searching Vectors
+• Vector Indexes
+• Retrieval Augmented Generation (RAG)
+• Agentic RAG
+• Integration
+82
+

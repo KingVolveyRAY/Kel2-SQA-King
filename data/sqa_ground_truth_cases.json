@@ -1,0 +1,902 @@
+[
+  {
+    "case_id": "TC-001",
+    "rule_id": "SEC-01",
+    "title": "SQL Injection via string formatting (Variant 1)",
+    "code_diff": "def get_user_by_email(email):\n    query = f\"SELECT * FROM users WHERE email = '{email}'\"\n    return db.session.execute(query).fetchall()",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "Unsanitized user input formatted directly into raw SQL string."
+  },
+  {
+    "case_id": "TC-002",
+    "rule_id": "SEC-01",
+    "title": "SQL Injection via concatenation in search endpoint (Variant 1)",
+    "code_diff": "def search_products(term):\n    sql = \"SELECT id, name FROM items WHERE name LIKE '%\" + term + \"%'\"\n    return cursor.execute(sql)",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "String concatenation in SQL LIKE clause allows query escaping."
+  },
+  {
+    "case_id": "TC-003",
+    "rule_id": "SEC-02",
+    "title": "Reflected XSS in Flask route (Variant 1)",
+    "code_diff": "@app.route('/greet')\ndef greet():\n    name = request.args.get('name', 'Guest')\n    return f'<h1>Welcome {name}!</h1>'",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Raw user input rendered directly into HTML response without escaping."
+  },
+  {
+    "case_id": "TC-004",
+    "rule_id": "SEC-02",
+    "title": "DOM-based XSS via innerHTML (Variant 1)",
+    "code_diff": "function renderMessage(userMsg) {\n    document.getElementById('chat-window').innerHTML = '<div>' + userMsg + '</div>';\n}",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Direct assignment of user input to innerHTML without sanitization."
+  },
+  {
+    "case_id": "TC-005",
+    "rule_id": "SEC-03",
+    "title": "Hardcoded AWS Access Key in auth module (Variant 1)",
+    "code_diff": "AWS_ACCESS_KEY = 'AKIAIOSFODNN7EXAMPLE'\nAWS_SECRET_KEY = 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "Cloud credentials hardcoded in codebase instead of environment secrets."
+  },
+  {
+    "case_id": "TC-006",
+    "rule_id": "SEC-03",
+    "title": "Hardcoded JWT Secret Token in settings (Variant 1)",
+    "code_diff": "JWT_SECRET_KEY = 'my_super_secret_production_jwt_signing_key_9988'\nALGORITHM = 'HS256'",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "Static JWT signing key exposed in source control."
+  },
+  {
+    "case_id": "TC-007",
+    "rule_id": "SEC-04",
+    "title": "Arbitrary file read via path traversal (Variant 1)",
+    "code_diff": "def download_report(filename):\n    filepath = os.path.join('/var/reports', filename)\n    with open(filepath, 'rb') as f:\n        return f.read()",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Path traversal allows reading arbitrary files like ../../etc/passwd."
+  },
+  {
+    "case_id": "TC-008",
+    "rule_id": "SEC-04",
+    "title": "Insecure file write using user-controlled name (Variant 1)",
+    "code_diff": "def save_avatar(user_input_name, data):\n    path = f'./static/avatars/{user_input_name}'\n    with open(path, 'wb') as f:\n        f.write(data)",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Relative paths in filename can overwrite critical system files."
+  },
+  {
+    "case_id": "TC-009",
+    "rule_id": "SEC-05",
+    "title": "Weak PRNG used for session reset token (Variant 1)",
+    "code_diff": "import random\ndef generate_password_reset_token():\n    return str(random.randint(100000, 999999))",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Standard pseudo-random number generator is predictable and insecure for auth tokens."
+  },
+  {
+    "case_id": "TC-010",
+    "rule_id": "SEC-05",
+    "title": "Insecure salt generation with standard random (Variant 1)",
+    "code_diff": "import random, string\ndef get_salt():\n    return ''.join(random.choice(string.ascii_letters) for _ in range(16))",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "cryptographically insecure random choices for password hashing salt."
+  },
+  {
+    "case_id": "TC-011",
+    "rule_id": "LOGIC-01",
+    "title": "Off-by-one error in array boundary traversal (Variant 1)",
+    "code_diff": "def find_peak_element(nums):\n    for i in range(len(nums) + 1):\n        if nums[i] > nums[i+1]:\n            return i",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Loop limit and subsequent indexing causes IndexError out of bounds."
+  },
+  {
+    "case_id": "TC-012",
+    "rule_id": "LOGIC-01",
+    "title": "Off-by-one in string slicing index (Variant 1)",
+    "code_diff": "def extract_subsequence(text, length):\n    return [text[i:i+length] for i in range(len(text) - length + 2)]",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Upper range boundary causes index overflow in final slice evaluation."
+  },
+  {
+    "case_id": "TC-013",
+    "rule_id": "LOGIC-02",
+    "title": "Unchecked None access on optional database relation (Variant 1)",
+    "code_diff": "def get_user_company_address(user_id):\n    user = repository.find_by_id(user_id)\n    return user.company.address.city",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Chained attribute access without defensive checks causes AttributeError if user or company is None."
+  },
+  {
+    "case_id": "TC-014",
+    "rule_id": "LOGIC-02",
+    "title": "Missing None check before dictionary get key (Variant 1)",
+    "code_diff": "def calculate_discount(order):\n    coupon = order.get('coupon')\n    return order['total'] * coupon['discount_pct']",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Accessing coupon['discount_pct'] raises TypeError if coupon is None."
+  },
+  {
+    "case_id": "TC-015",
+    "rule_id": "LOGIC-03",
+    "title": "Mutable default argument in Python function (Variant 1)",
+    "code_diff": "def add_audit_log(event, metadata={}):\n    metadata['timestamp'] = time.time()\n    metadata['event'] = event\n    audit_trail.append(metadata)\n    return metadata",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Mutable dictionary default argument causes state leakage across separate function invocations."
+  },
+  {
+    "case_id": "TC-016",
+    "rule_id": "LOGIC-03",
+    "title": "Mutable default list in task accumulator (Variant 1)",
+    "code_diff": "def schedule_jobs(task, job_queue=[]):\n    job_queue.append(task)\n    return job_queue",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "List default argument retains appended tasks across independent calls."
+  },
+  {
+    "case_id": "TC-017",
+    "rule_id": "LOGIC-04",
+    "title": "Silent error suppression with bare except pass (Variant 1)",
+    "code_diff": "def sync_external_data():\n    try:\n        client.push_payload(payload)\n    except:\n        pass",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Bare except swallowed all unexpected exceptions (e.g., KeyboardInterrupt, NetworkError) with no logging."
+  },
+  {
+    "case_id": "TC-018",
+    "rule_id": "LOGIC-04",
+    "title": "Catching generic Exception without logging or re-raising (Variant 1)",
+    "code_diff": "def process_transaction(txn):\n    try:\n        gateway.charge(txn)\n    except Exception:\n        return {'status': 'error'}",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Swallowing exception detail prevents audit tracing and debugging root cause."
+  },
+  {
+    "case_id": "TC-019",
+    "rule_id": "PERF-01",
+    "title": "Unclosed file handle without context manager (Variant 1)",
+    "code_diff": "def read_configuration(path):\n    f = open(path, 'r')\n    config_data = json.load(f)\n    return config_data",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "File descriptor is never closed, causing file descriptor leaks in production."
+  },
+  {
+    "case_id": "TC-020",
+    "rule_id": "PERF-01",
+    "title": "Raw socket connection without try-finally close (Variant 1)",
+    "code_diff": "def send_heartbeat(host, port):\n    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    s.connect((host, port))\n    s.sendall(b'PING')\n    return s.recv(1024)",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Socket resource leak on network error or missing s.close()."
+  },
+  {
+    "case_id": "TC-021",
+    "rule_id": "PERF-02",
+    "title": "N+1 query anti-pattern in entity loop (Variant 1)",
+    "code_diff": "def get_user_orders_summary():\n    users = db.query(User).all()\n    return [{'user': u.name, 'orders': db.query(Order).filter_by(user_id=u.id).count()} for u in users]",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "N+1 database roundtrips executed instead of single aggregated JOIN/GROUP BY query."
+  },
+  {
+    "case_id": "TC-022",
+    "rule_id": "PERF-02",
+    "title": "Inefficient nested query in list comprehension (Variant 1)",
+    "code_diff": "def hydrate_department_stats(departments):\n    return {d.id: [emp.salary for emp in db.query(Employee).filter_by(dept_id=d.id)] for d in departments}",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Queries executed inside loop for each department."
+  },
+  {
+    "case_id": "TC-023",
+    "rule_id": "PERF-03",
+    "title": "Suboptimal string concatenation in large loop (Variant 1)",
+    "code_diff": "def build_csv_export(records):\n    csv_text = ''\n    for row in records:\n        csv_text += ','.join(str(x) for x in row) + '\\n'\n    return csv_text",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Repeated string concatenation allocates O(N^2) memory copies instead of list join."
+  },
+  {
+    "case_id": "TC-024",
+    "rule_id": "SQA-01",
+    "title": "High cyclomatic complexity and deeply nested logic (Variant 1)",
+    "code_diff": "def evaluate_discount_rules(customer, cart, season, coupon):\n    if customer.is_active:\n        if cart.total > 100:\n            if season == 'HOLIDAY':\n                if coupon.is_valid:\n                    if customer.tier == 'VIP':\n                        return cart.total * 0.5\n                    else:\n                        return cart.total * 0.7\n                else:\n                    return cart.total * 0.8\n            else:\n                return cart.total * 0.9\n    return cart.total",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Excessive nested branching (cyclomatic complexity > 8) hurts testability and readability."
+  },
+  {
+    "case_id": "TC-025",
+    "rule_id": "SQA-02",
+    "title": "Critical payment logic modification with missing unit tests (Variant 1)",
+    "code_diff": "# Pull Request #402: Update core pricing engine\ndef calculate_invoice_totals(items, tax_rate, discount_code):\n    # 120 lines of complex discount logic added\n    pass # (No unit test file added in PR)",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Major financial calculation changed without accompanying test coverage."
+  },
+  {
+    "case_id": "TC-026",
+    "rule_id": "SQA-03",
+    "title": "Missing docstrings and type annotations on public library function (Variant 1)",
+    "code_diff": "def transform_dataset(data, mapping, strict=False):\n    return {mapping[k]: v for k, v in data.items() if not strict or k in mapping}",
+    "has_defect": true,
+    "severity": "LOW",
+    "expected_analysis": "Public API lacks PEP-484 type annotations and docstring describing behavior and parameters."
+  },
+  {
+    "case_id": "TC-027",
+    "rule_id": "SEC-01",
+    "title": "SQL Injection via string formatting (Variant 2)",
+    "code_diff": "def get_user_by_email(email):\n    query = f\"SELECT * FROM users WHERE email = '{email}'\"\n    return db.session.execute(query).fetchall()",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "Unsanitized user input formatted directly into raw SQL string."
+  },
+  {
+    "case_id": "TC-028",
+    "rule_id": "SEC-01",
+    "title": "SQL Injection via concatenation in search endpoint (Variant 2)",
+    "code_diff": "def search_products(term):\n    sql = \"SELECT id, name FROM items WHERE name LIKE '%\" + term + \"%'\"\n    return cursor.execute(sql)",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "String concatenation in SQL LIKE clause allows query escaping."
+  },
+  {
+    "case_id": "TC-029",
+    "rule_id": "SEC-02",
+    "title": "Reflected XSS in Flask route (Variant 2)",
+    "code_diff": "@app.route('/greet')\ndef greet():\n    name = request.args.get('name', 'Guest')\n    return f'<h1>Welcome {name}!</h1>'",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Raw user input rendered directly into HTML response without escaping."
+  },
+  {
+    "case_id": "TC-030",
+    "rule_id": "SEC-02",
+    "title": "DOM-based XSS via innerHTML (Variant 2)",
+    "code_diff": "function renderMessage(userMsg) {\n    document.getElementById('chat-window').innerHTML = '<div>' + userMsg + '</div>';\n}",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Direct assignment of user input to innerHTML without sanitization."
+  },
+  {
+    "case_id": "TC-031",
+    "rule_id": "SEC-03",
+    "title": "Hardcoded AWS Access Key in auth module (Variant 2)",
+    "code_diff": "AWS_ACCESS_KEY = 'AKIAIOSFODNN7EXAMPLE'\nAWS_SECRET_KEY = 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "Cloud credentials hardcoded in codebase instead of environment secrets."
+  },
+  {
+    "case_id": "TC-032",
+    "rule_id": "SEC-03",
+    "title": "Hardcoded JWT Secret Token in settings (Variant 2)",
+    "code_diff": "JWT_SECRET_KEY = 'my_super_secret_production_jwt_signing_key_9988'\nALGORITHM = 'HS256'",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "Static JWT signing key exposed in source control."
+  },
+  {
+    "case_id": "TC-033",
+    "rule_id": "SEC-04",
+    "title": "Arbitrary file read via path traversal (Variant 2)",
+    "code_diff": "def download_report(filename):\n    filepath = os.path.join('/var/reports', filename)\n    with open(filepath, 'rb') as f:\n        return f.read()",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Path traversal allows reading arbitrary files like ../../etc/passwd."
+  },
+  {
+    "case_id": "TC-034",
+    "rule_id": "SEC-04",
+    "title": "Insecure file write using user-controlled name (Variant 2)",
+    "code_diff": "def save_avatar(user_input_name, data):\n    path = f'./static/avatars/{user_input_name}'\n    with open(path, 'wb') as f:\n        f.write(data)",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Relative paths in filename can overwrite critical system files."
+  },
+  {
+    "case_id": "TC-035",
+    "rule_id": "SEC-05",
+    "title": "Weak PRNG used for session reset token (Variant 2)",
+    "code_diff": "import random\ndef generate_password_reset_token():\n    return str(random.randint(100000, 999999))",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Standard pseudo-random number generator is predictable and insecure for auth tokens."
+  },
+  {
+    "case_id": "TC-036",
+    "rule_id": "SEC-05",
+    "title": "Insecure salt generation with standard random (Variant 2)",
+    "code_diff": "import random, string\ndef get_salt():\n    return ''.join(random.choice(string.ascii_letters) for _ in range(16))",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "cryptographically insecure random choices for password hashing salt."
+  },
+  {
+    "case_id": "TC-037",
+    "rule_id": "LOGIC-01",
+    "title": "Off-by-one error in array boundary traversal (Variant 2)",
+    "code_diff": "def find_peak_element(nums):\n    for i in range(len(nums) + 1):\n        if nums[i] > nums[i+1]:\n            return i",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Loop limit and subsequent indexing causes IndexError out of bounds."
+  },
+  {
+    "case_id": "TC-038",
+    "rule_id": "LOGIC-01",
+    "title": "Off-by-one in string slicing index (Variant 2)",
+    "code_diff": "def extract_subsequence(text, length):\n    return [text[i:i+length] for i in range(len(text) - length + 2)]",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Upper range boundary causes index overflow in final slice evaluation."
+  },
+  {
+    "case_id": "TC-039",
+    "rule_id": "LOGIC-02",
+    "title": "Unchecked None access on optional database relation (Variant 2)",
+    "code_diff": "def get_user_company_address(user_id):\n    user = repository.find_by_id(user_id)\n    return user.company.address.city",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Chained attribute access without defensive checks causes AttributeError if user or company is None."
+  },
+  {
+    "case_id": "TC-040",
+    "rule_id": "LOGIC-02",
+    "title": "Missing None check before dictionary get key (Variant 2)",
+    "code_diff": "def calculate_discount(order):\n    coupon = order.get('coupon')\n    return order['total'] * coupon['discount_pct']",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Accessing coupon['discount_pct'] raises TypeError if coupon is None."
+  },
+  {
+    "case_id": "TC-041",
+    "rule_id": "LOGIC-03",
+    "title": "Mutable default argument in Python function (Variant 2)",
+    "code_diff": "def add_audit_log(event, metadata={}):\n    metadata['timestamp'] = time.time()\n    metadata['event'] = event\n    audit_trail.append(metadata)\n    return metadata",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Mutable dictionary default argument causes state leakage across separate function invocations."
+  },
+  {
+    "case_id": "TC-042",
+    "rule_id": "LOGIC-03",
+    "title": "Mutable default list in task accumulator (Variant 2)",
+    "code_diff": "def schedule_jobs(task, job_queue=[]):\n    job_queue.append(task)\n    return job_queue",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "List default argument retains appended tasks across independent calls."
+  },
+  {
+    "case_id": "TC-043",
+    "rule_id": "LOGIC-04",
+    "title": "Silent error suppression with bare except pass (Variant 2)",
+    "code_diff": "def sync_external_data():\n    try:\n        client.push_payload(payload)\n    except:\n        pass",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Bare except swallowed all unexpected exceptions (e.g., KeyboardInterrupt, NetworkError) with no logging."
+  },
+  {
+    "case_id": "TC-044",
+    "rule_id": "LOGIC-04",
+    "title": "Catching generic Exception without logging or re-raising (Variant 2)",
+    "code_diff": "def process_transaction(txn):\n    try:\n        gateway.charge(txn)\n    except Exception:\n        return {'status': 'error'}",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Swallowing exception detail prevents audit tracing and debugging root cause."
+  },
+  {
+    "case_id": "TC-045",
+    "rule_id": "PERF-01",
+    "title": "Unclosed file handle without context manager (Variant 2)",
+    "code_diff": "def read_configuration(path):\n    f = open(path, 'r')\n    config_data = json.load(f)\n    return config_data",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "File descriptor is never closed, causing file descriptor leaks in production."
+  },
+  {
+    "case_id": "TC-046",
+    "rule_id": "PERF-01",
+    "title": "Raw socket connection without try-finally close (Variant 2)",
+    "code_diff": "def send_heartbeat(host, port):\n    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    s.connect((host, port))\n    s.sendall(b'PING')\n    return s.recv(1024)",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Socket resource leak on network error or missing s.close()."
+  },
+  {
+    "case_id": "TC-047",
+    "rule_id": "PERF-02",
+    "title": "N+1 query anti-pattern in entity loop (Variant 2)",
+    "code_diff": "def get_user_orders_summary():\n    users = db.query(User).all()\n    return [{'user': u.name, 'orders': db.query(Order).filter_by(user_id=u.id).count()} for u in users]",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "N+1 database roundtrips executed instead of single aggregated JOIN/GROUP BY query."
+  },
+  {
+    "case_id": "TC-048",
+    "rule_id": "PERF-02",
+    "title": "Inefficient nested query in list comprehension (Variant 2)",
+    "code_diff": "def hydrate_department_stats(departments):\n    return {d.id: [emp.salary for emp in db.query(Employee).filter_by(dept_id=d.id)] for d in departments}",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Queries executed inside loop for each department."
+  },
+  {
+    "case_id": "TC-049",
+    "rule_id": "PERF-03",
+    "title": "Suboptimal string concatenation in large loop (Variant 2)",
+    "code_diff": "def build_csv_export(records):\n    csv_text = ''\n    for row in records:\n        csv_text += ','.join(str(x) for x in row) + '\\n'\n    return csv_text",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Repeated string concatenation allocates O(N^2) memory copies instead of list join."
+  },
+  {
+    "case_id": "TC-050",
+    "rule_id": "SQA-01",
+    "title": "High cyclomatic complexity and deeply nested logic (Variant 2)",
+    "code_diff": "def evaluate_discount_rules(customer, cart, season, coupon):\n    if customer.is_active:\n        if cart.total > 100:\n            if season == 'HOLIDAY':\n                if coupon.is_valid:\n                    if customer.tier == 'VIP':\n                        return cart.total * 0.5\n                    else:\n                        return cart.total * 0.7\n                else:\n                    return cart.total * 0.8\n            else:\n                return cart.total * 0.9\n    return cart.total",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Excessive nested branching (cyclomatic complexity > 8) hurts testability and readability."
+  },
+  {
+    "case_id": "TC-051",
+    "rule_id": "SQA-02",
+    "title": "Critical payment logic modification with missing unit tests (Variant 2)",
+    "code_diff": "# Pull Request #402: Update core pricing engine\ndef calculate_invoice_totals(items, tax_rate, discount_code):\n    # 120 lines of complex discount logic added\n    pass # (No unit test file added in PR)",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Major financial calculation changed without accompanying test coverage."
+  },
+  {
+    "case_id": "TC-052",
+    "rule_id": "SQA-03",
+    "title": "Missing docstrings and type annotations on public library function (Variant 2)",
+    "code_diff": "def transform_dataset(data, mapping, strict=False):\n    return {mapping[k]: v for k, v in data.items() if not strict or k in mapping}",
+    "has_defect": true,
+    "severity": "LOW",
+    "expected_analysis": "Public API lacks PEP-484 type annotations and docstring describing behavior and parameters."
+  },
+  {
+    "case_id": "TC-053",
+    "rule_id": "SEC-01",
+    "title": "SQL Injection via string formatting (Variant 3)",
+    "code_diff": "def get_user_by_email(email):\n    query = f\"SELECT * FROM users WHERE email = '{email}'\"\n    return db.session.execute(query).fetchall()",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "Unsanitized user input formatted directly into raw SQL string."
+  },
+  {
+    "case_id": "TC-054",
+    "rule_id": "SEC-01",
+    "title": "SQL Injection via concatenation in search endpoint (Variant 3)",
+    "code_diff": "def search_products(term):\n    sql = \"SELECT id, name FROM items WHERE name LIKE '%\" + term + \"%'\"\n    return cursor.execute(sql)",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "String concatenation in SQL LIKE clause allows query escaping."
+  },
+  {
+    "case_id": "TC-055",
+    "rule_id": "SEC-02",
+    "title": "Reflected XSS in Flask route (Variant 3)",
+    "code_diff": "@app.route('/greet')\ndef greet():\n    name = request.args.get('name', 'Guest')\n    return f'<h1>Welcome {name}!</h1>'",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Raw user input rendered directly into HTML response without escaping."
+  },
+  {
+    "case_id": "TC-056",
+    "rule_id": "SEC-02",
+    "title": "DOM-based XSS via innerHTML (Variant 3)",
+    "code_diff": "function renderMessage(userMsg) {\n    document.getElementById('chat-window').innerHTML = '<div>' + userMsg + '</div>';\n}",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Direct assignment of user input to innerHTML without sanitization."
+  },
+  {
+    "case_id": "TC-057",
+    "rule_id": "SEC-03",
+    "title": "Hardcoded AWS Access Key in auth module (Variant 3)",
+    "code_diff": "AWS_ACCESS_KEY = 'AKIAIOSFODNN7EXAMPLE'\nAWS_SECRET_KEY = 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "Cloud credentials hardcoded in codebase instead of environment secrets."
+  },
+  {
+    "case_id": "TC-058",
+    "rule_id": "SEC-03",
+    "title": "Hardcoded JWT Secret Token in settings (Variant 3)",
+    "code_diff": "JWT_SECRET_KEY = 'my_super_secret_production_jwt_signing_key_9988'\nALGORITHM = 'HS256'",
+    "has_defect": true,
+    "severity": "CRITICAL",
+    "expected_analysis": "Static JWT signing key exposed in source control."
+  },
+  {
+    "case_id": "TC-059",
+    "rule_id": "SEC-04",
+    "title": "Arbitrary file read via path traversal (Variant 3)",
+    "code_diff": "def download_report(filename):\n    filepath = os.path.join('/var/reports', filename)\n    with open(filepath, 'rb') as f:\n        return f.read()",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Path traversal allows reading arbitrary files like ../../etc/passwd."
+  },
+  {
+    "case_id": "TC-060",
+    "rule_id": "SEC-04",
+    "title": "Insecure file write using user-controlled name (Variant 3)",
+    "code_diff": "def save_avatar(user_input_name, data):\n    path = f'./static/avatars/{user_input_name}'\n    with open(path, 'wb') as f:\n        f.write(data)",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Relative paths in filename can overwrite critical system files."
+  },
+  {
+    "case_id": "TC-061",
+    "rule_id": "SEC-05",
+    "title": "Weak PRNG used for session reset token (Variant 3)",
+    "code_diff": "import random\ndef generate_password_reset_token():\n    return str(random.randint(100000, 999999))",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Standard pseudo-random number generator is predictable and insecure for auth tokens."
+  },
+  {
+    "case_id": "TC-062",
+    "rule_id": "SEC-05",
+    "title": "Insecure salt generation with standard random (Variant 3)",
+    "code_diff": "import random, string\ndef get_salt():\n    return ''.join(random.choice(string.ascii_letters) for _ in range(16))",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "cryptographically insecure random choices for password hashing salt."
+  },
+  {
+    "case_id": "TC-063",
+    "rule_id": "LOGIC-01",
+    "title": "Off-by-one error in array boundary traversal (Variant 3)",
+    "code_diff": "def find_peak_element(nums):\n    for i in range(len(nums) + 1):\n        if nums[i] > nums[i+1]:\n            return i",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Loop limit and subsequent indexing causes IndexError out of bounds."
+  },
+  {
+    "case_id": "TC-064",
+    "rule_id": "LOGIC-01",
+    "title": "Off-by-one in string slicing index (Variant 3)",
+    "code_diff": "def extract_subsequence(text, length):\n    return [text[i:i+length] for i in range(len(text) - length + 2)]",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Upper range boundary causes index overflow in final slice evaluation."
+  },
+  {
+    "case_id": "TC-065",
+    "rule_id": "LOGIC-02",
+    "title": "Unchecked None access on optional database relation (Variant 3)",
+    "code_diff": "def get_user_company_address(user_id):\n    user = repository.find_by_id(user_id)\n    return user.company.address.city",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Chained attribute access without defensive checks causes AttributeError if user or company is None."
+  },
+  {
+    "case_id": "TC-066",
+    "rule_id": "LOGIC-02",
+    "title": "Missing None check before dictionary get key (Variant 3)",
+    "code_diff": "def calculate_discount(order):\n    coupon = order.get('coupon')\n    return order['total'] * coupon['discount_pct']",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Accessing coupon['discount_pct'] raises TypeError if coupon is None."
+  },
+  {
+    "case_id": "TC-067",
+    "rule_id": "LOGIC-03",
+    "title": "Mutable default argument in Python function (Variant 3)",
+    "code_diff": "def add_audit_log(event, metadata={}):\n    metadata['timestamp'] = time.time()\n    metadata['event'] = event\n    audit_trail.append(metadata)\n    return metadata",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Mutable dictionary default argument causes state leakage across separate function invocations."
+  },
+  {
+    "case_id": "TC-068",
+    "rule_id": "LOGIC-03",
+    "title": "Mutable default list in task accumulator (Variant 3)",
+    "code_diff": "def schedule_jobs(task, job_queue=[]):\n    job_queue.append(task)\n    return job_queue",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "List default argument retains appended tasks across independent calls."
+  },
+  {
+    "case_id": "TC-069",
+    "rule_id": "LOGIC-04",
+    "title": "Silent error suppression with bare except pass (Variant 3)",
+    "code_diff": "def sync_external_data():\n    try:\n        client.push_payload(payload)\n    except:\n        pass",
+    "has_defect": true,
+    "severity": "HIGH",
+    "expected_analysis": "Bare except swallowed all unexpected exceptions (e.g., KeyboardInterrupt, NetworkError) with no logging."
+  },
+  {
+    "case_id": "TC-070",
+    "rule_id": "LOGIC-04",
+    "title": "Catching generic Exception without logging or re-raising (Variant 3)",
+    "code_diff": "def process_transaction(txn):\n    try:\n        gateway.charge(txn)\n    except Exception:\n        return {'status': 'error'}",
+    "has_defect": true,
+    "severity": "MEDIUM",
+    "expected_analysis": "Swallowing exception detail prevents audit tracing and debugging root cause."
+  },
+  {
+    "case_id": "TC-071",
+    "rule_id": "CLEAN-01",
+    "title": "Parameterized SQL query using modern SQLAlchemy / cursor execute (Clean Variant 1)",
+    "code_diff": "def get_user_by_email(email: str):\n    '''Fetch user record safely using parameterized query.'''\n    return db.session.execute(\n        text('SELECT * FROM users WHERE email = :email'),\n        {'email': email}\n    ).fetchone()",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Clean, secure parameterized SQL query with type annotations and docstring."
+  },
+  {
+    "case_id": "TC-072",
+    "rule_id": "CLEAN-02",
+    "title": "Properly escaped HTML response in web view (Clean Variant 1)",
+    "code_diff": "from markupsafe import escape\n@app.route('/greet')\ndef greet():\n    name = request.args.get('name', 'Guest')\n    return f'<h1>Welcome {escape(name)}!</h1>'",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Properly sanitized and escaped HTML output."
+  },
+  {
+    "case_id": "TC-073",
+    "rule_id": "CLEAN-03",
+    "title": "Environment secret retrieval with fallback validation (Clean Variant 1)",
+    "code_diff": "import os\nSECRET_KEY = os.environ.get('APP_SECRET_KEY')\nif not SECRET_KEY:\n    raise RuntimeError('APP_SECRET_KEY must be set in environment variables')",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Secure secret management via environment variable with explicit validation."
+  },
+  {
+    "case_id": "TC-074",
+    "rule_id": "CLEAN-04",
+    "title": "Safe path validation preventing directory traversal (Clean Variant 1)",
+    "code_diff": "def safe_read_report(base_dir: str, filename: str) -> bytes:\n    base = os.path.abspath(base_dir)\n    target = os.path.abspath(os.path.join(base, filename))\n    if not target.startswith(base):\n        raise PermissionError('Access denied: path traversal attempt')\n    with open(target, 'rb') as f:\n        return f.read()",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Robust path validation against base directory."
+  },
+  {
+    "case_id": "TC-075",
+    "rule_id": "CLEAN-05",
+    "title": "Cryptographically secure random token generation (Clean Variant 1)",
+    "code_diff": "import secrets\ndef generate_secure_reset_token() -> str:\n    '''Generate 256-bit cryptographically secure hex token.'''\n    return secrets.token_hex(32)",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Appropriate use of secrets module for auth token generation."
+  },
+  {
+    "case_id": "TC-076",
+    "rule_id": "CLEAN-06",
+    "title": "Defensive None checking with walrus operator or pattern matching (Clean Variant 1)",
+    "code_diff": "def get_user_city(user_id: int) -> Optional[str]:\n    user = repository.find_by_id(user_id)\n    if user and user.company and user.company.address:\n        return user.company.address.city\n    return None",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Defensive null-checking prevents AttributeError."
+  },
+  {
+    "case_id": "TC-077",
+    "rule_id": "CLEAN-07",
+    "title": "Immutable default argument idiom in function signature (Clean Variant 1)",
+    "code_diff": "def add_audit_log(event: str, metadata: Optional[dict] = None) -> dict:\n    meta = metadata.copy() if metadata is not None else {}\n    meta['timestamp'] = time.time()\n    meta['event'] = event\n    audit_trail.append(meta)\n    return meta",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Idiomatic None default avoiding mutable argument bugs."
+  },
+  {
+    "case_id": "TC-078",
+    "rule_id": "CLEAN-08",
+    "title": "Specific exception handling with structured logger (Clean Variant 1)",
+    "code_diff": "def sync_external_data() -> bool:\n    try:\n        client.push_payload(payload)\n        return True\n    except NetworkTimeoutError as err:\n        logger.warning('Transient network timeout during sync: %s', err)\n        return False",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Proper specific exception handling with appropriate logging."
+  },
+  {
+    "case_id": "TC-079",
+    "rule_id": "CLEAN-09",
+    "title": "Deterministic resource management via context manager (Clean Variant 1)",
+    "code_diff": "def read_configuration(path: str) -> dict:\n    with open(path, 'r', encoding='utf-8') as f:\n        return json.load(f)",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Clean context manager usage ensures file descriptor cleanup."
+  },
+  {
+    "case_id": "TC-080",
+    "rule_id": "CLEAN-10",
+    "title": "Bulk joined query avoiding N+1 performance bottleneck (Clean Variant 1)",
+    "code_diff": "def get_users_with_order_counts():\n    return db.query(\n        User.name, func.count(Order.id).label('order_count')\n    ).outerjoin(Order).group_by(User.id).all()",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Optimized database query avoiding N+1 roundtrips."
+  },
+  {
+    "case_id": "TC-081",
+    "rule_id": "CLEAN-01",
+    "title": "Parameterized SQL query using modern SQLAlchemy / cursor execute (Clean Variant 2)",
+    "code_diff": "def get_user_by_email(email: str):\n    '''Fetch user record safely using parameterized query.'''\n    return db.session.execute(\n        text('SELECT * FROM users WHERE email = :email'),\n        {'email': email}\n    ).fetchone()",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Clean, secure parameterized SQL query with type annotations and docstring."
+  },
+  {
+    "case_id": "TC-082",
+    "rule_id": "CLEAN-02",
+    "title": "Properly escaped HTML response in web view (Clean Variant 2)",
+    "code_diff": "from markupsafe import escape\n@app.route('/greet')\ndef greet():\n    name = request.args.get('name', 'Guest')\n    return f'<h1>Welcome {escape(name)}!</h1>'",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Properly sanitized and escaped HTML output."
+  },
+  {
+    "case_id": "TC-083",
+    "rule_id": "CLEAN-03",
+    "title": "Environment secret retrieval with fallback validation (Clean Variant 2)",
+    "code_diff": "import os\nSECRET_KEY = os.environ.get('APP_SECRET_KEY')\nif not SECRET_KEY:\n    raise RuntimeError('APP_SECRET_KEY must be set in environment variables')",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Secure secret management via environment variable with explicit validation."
+  },
+  {
+    "case_id": "TC-084",
+    "rule_id": "CLEAN-04",
+    "title": "Safe path validation preventing directory traversal (Clean Variant 2)",
+    "code_diff": "def safe_read_report(base_dir: str, filename: str) -> bytes:\n    base = os.path.abspath(base_dir)\n    target = os.path.abspath(os.path.join(base, filename))\n    if not target.startswith(base):\n        raise PermissionError('Access denied: path traversal attempt')\n    with open(target, 'rb') as f:\n        return f.read()",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Robust path validation against base directory."
+  },
+  {
+    "case_id": "TC-085",
+    "rule_id": "CLEAN-05",
+    "title": "Cryptographically secure random token generation (Clean Variant 2)",
+    "code_diff": "import secrets\ndef generate_secure_reset_token() -> str:\n    '''Generate 256-bit cryptographically secure hex token.'''\n    return secrets.token_hex(32)",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Appropriate use of secrets module for auth token generation."
+  },
+  {
+    "case_id": "TC-086",
+    "rule_id": "CLEAN-06",
+    "title": "Defensive None checking with walrus operator or pattern matching (Clean Variant 2)",
+    "code_diff": "def get_user_city(user_id: int) -> Optional[str]:\n    user = repository.find_by_id(user_id)\n    if user and user.company and user.company.address:\n        return user.company.address.city\n    return None",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Defensive null-checking prevents AttributeError."
+  },
+  {
+    "case_id": "TC-087",
+    "rule_id": "CLEAN-07",
+    "title": "Immutable default argument idiom in function signature (Clean Variant 2)",
+    "code_diff": "def add_audit_log(event: str, metadata: Optional[dict] = None) -> dict:\n    meta = metadata.copy() if metadata is not None else {}\n    meta['timestamp'] = time.time()\n    meta['event'] = event\n    audit_trail.append(meta)\n    return meta",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Idiomatic None default avoiding mutable argument bugs."
+  },
+  {
+    "case_id": "TC-088",
+    "rule_id": "CLEAN-08",
+    "title": "Specific exception handling with structured logger (Clean Variant 2)",
+    "code_diff": "def sync_external_data() -> bool:\n    try:\n        client.push_payload(payload)\n        return True\n    except NetworkTimeoutError as err:\n        logger.warning('Transient network timeout during sync: %s', err)\n        return False",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Proper specific exception handling with appropriate logging."
+  },
+  {
+    "case_id": "TC-089",
+    "rule_id": "CLEAN-09",
+    "title": "Deterministic resource management via context manager (Clean Variant 2)",
+    "code_diff": "def read_configuration(path: str) -> dict:\n    with open(path, 'r', encoding='utf-8') as f:\n        return json.load(f)",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Clean context manager usage ensures file descriptor cleanup."
+  },
+  {
+    "case_id": "TC-090",
+    "rule_id": "CLEAN-10",
+    "title": "Bulk joined query avoiding N+1 performance bottleneck (Clean Variant 2)",
+    "code_diff": "def get_users_with_order_counts():\n    return db.query(\n        User.name, func.count(Order.id).label('order_count')\n    ).outerjoin(Order).group_by(User.id).all()",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Optimized database query avoiding N+1 roundtrips."
+  },
+  {
+    "case_id": "TC-091",
+    "rule_id": "CLEAN-01",
+    "title": "Parameterized SQL query using modern SQLAlchemy / cursor execute (Clean Variant 3)",
+    "code_diff": "def get_user_by_email(email: str):\n    '''Fetch user record safely using parameterized query.'''\n    return db.session.execute(\n        text('SELECT * FROM users WHERE email = :email'),\n        {'email': email}\n    ).fetchone()",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Clean, secure parameterized SQL query with type annotations and docstring."
+  },
+  {
+    "case_id": "TC-092",
+    "rule_id": "CLEAN-02",
+    "title": "Properly escaped HTML response in web view (Clean Variant 3)",
+    "code_diff": "from markupsafe import escape\n@app.route('/greet')\ndef greet():\n    name = request.args.get('name', 'Guest')\n    return f'<h1>Welcome {escape(name)}!</h1>'",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Properly sanitized and escaped HTML output."
+  },
+  {
+    "case_id": "TC-093",
+    "rule_id": "CLEAN-03",
+    "title": "Environment secret retrieval with fallback validation (Clean Variant 3)",
+    "code_diff": "import os\nSECRET_KEY = os.environ.get('APP_SECRET_KEY')\nif not SECRET_KEY:\n    raise RuntimeError('APP_SECRET_KEY must be set in environment variables')",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Secure secret management via environment variable with explicit validation."
+  },
+  {
+    "case_id": "TC-094",
+    "rule_id": "CLEAN-04",
+    "title": "Safe path validation preventing directory traversal (Clean Variant 3)",
+    "code_diff": "def safe_read_report(base_dir: str, filename: str) -> bytes:\n    base = os.path.abspath(base_dir)\n    target = os.path.abspath(os.path.join(base, filename))\n    if not target.startswith(base):\n        raise PermissionError('Access denied: path traversal attempt')\n    with open(target, 'rb') as f:\n        return f.read()",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Robust path validation against base directory."
+  },
+  {
+    "case_id": "TC-095",
+    "rule_id": "CLEAN-05",
+    "title": "Cryptographically secure random token generation (Clean Variant 3)",
+    "code_diff": "import secrets\ndef generate_secure_reset_token() -> str:\n    '''Generate 256-bit cryptographically secure hex token.'''\n    return secrets.token_hex(32)",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Appropriate use of secrets module for auth token generation."
+  },
+  {
+    "case_id": "TC-096",
+    "rule_id": "CLEAN-06",
+    "title": "Defensive None checking with walrus operator or pattern matching (Clean Variant 3)",
+    "code_diff": "def get_user_city(user_id: int) -> Optional[str]:\n    user = repository.find_by_id(user_id)\n    if user and user.company and user.company.address:\n        return user.company.address.city\n    return None",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Defensive null-checking prevents AttributeError."
+  },
+  {
+    "case_id": "TC-097",
+    "rule_id": "CLEAN-07",
+    "title": "Immutable default argument idiom in function signature (Clean Variant 3)",
+    "code_diff": "def add_audit_log(event: str, metadata: Optional[dict] = None) -> dict:\n    meta = metadata.copy() if metadata is not None else {}\n    meta['timestamp'] = time.time()\n    meta['event'] = event\n    audit_trail.append(meta)\n    return meta",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Idiomatic None default avoiding mutable argument bugs."
+  },
+  {
+    "case_id": "TC-098",
+    "rule_id": "CLEAN-08",
+    "title": "Specific exception handling with structured logger (Clean Variant 3)",
+    "code_diff": "def sync_external_data() -> bool:\n    try:\n        client.push_payload(payload)\n        return True\n    except NetworkTimeoutError as err:\n        logger.warning('Transient network timeout during sync: %s', err)\n        return False",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Proper specific exception handling with appropriate logging."
+  },
+  {
+    "case_id": "TC-099",
+    "rule_id": "CLEAN-09",
+    "title": "Deterministic resource management via context manager (Clean Variant 3)",
+    "code_diff": "def read_configuration(path: str) -> dict:\n    with open(path, 'r', encoding='utf-8') as f:\n        return json.load(f)",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Clean context manager usage ensures file descriptor cleanup."
+  },
+  {
+    "case_id": "TC-100",
+    "rule_id": "CLEAN-10",
+    "title": "Bulk joined query avoiding N+1 performance bottleneck (Clean Variant 3)",
+    "code_diff": "def get_users_with_order_counts():\n    return db.query(\n        User.name, func.count(Order.id).label('order_count')\n    ).outerjoin(Order).group_by(User.id).all()",
+    "has_defect": false,
+    "severity": "NONE",
+    "expected_analysis": "Optimized database query avoiding N+1 roundtrips."
+  }
+]

@@ -1,0 +1,258 @@
+[
+  {
+    "rule_id": "SEC-01",
+    "category": "Security",
+    "title": "SQL Injection Prevention",
+    "description": "Never concatenate or format user input directly into SQL queries. Always use parameterized queries or ORM bind variables to prevent SQL injection vulnerabilities.",
+    "bad_example": "cursor.execute(f'SELECT * FROM users WHERE username = \\'{username}\\'')",
+    "good_example": "cursor.execute('SELECT * FROM users WHERE username = %s', (username,))",
+    "severity": "CRITICAL",
+    "keywords": [
+      "sql injection",
+      "database query",
+      "execute",
+      "parameterized",
+      "raw sql",
+      "cursor.execute",
+      "bind parameters"
+    ]
+  },
+  {
+    "rule_id": "SEC-02",
+    "category": "Security",
+    "title": "Cross-Site Scripting (XSS) Prevention",
+    "description": "Always sanitize and HTML-escape user-supplied data before rendering it in web views, responses, or email templates.",
+    "bad_example": "return f'<div>Hello, {request.args.get(\"name\")}</div>'",
+    "good_example": "return f'<div>Hello, {escape(request.args.get(\"name\"))}</div>'",
+    "severity": "HIGH",
+    "keywords": [
+      "xss",
+      "cross-site scripting",
+      "html escape",
+      "render",
+      "innerhtml",
+      "template injection",
+      "sanitize"
+    ]
+  },
+  {
+    "rule_id": "SEC-03",
+    "category": "Security",
+    "title": "No Hardcoded Secrets or API Keys",
+    "description": "Never commit plaintext credentials, passwords, JWT secrets, private keys, or API tokens directly in source code. Retrieve them from environment variables or a secure key vault.",
+    "bad_example": "SECRET_KEY = 'super-secret-production-key-12345'",
+    "good_example": "SECRET_KEY = os.environ.get('SECRET_KEY')",
+    "severity": "CRITICAL",
+    "keywords": [
+      "hardcoded secret",
+      "api key",
+      "password",
+      "private key",
+      "token",
+      "credentials",
+      "environment variable"
+    ]
+  },
+  {
+    "rule_id": "SEC-04",
+    "category": "Security",
+    "title": "Path Traversal and File Path Validation",
+    "description": "Validate and resolve user-controlled file paths against a trusted base directory to prevent directory traversal attacks (e.g., ../../etc/passwd).",
+    "bad_example": "with open(os.path.join('/uploads', user_filename), 'rb') as f: return f.read()",
+    "good_example": "safe_path = os.path.abspath(os.path.join('/uploads', user_filename)); assert safe_path.startswith('/uploads')",
+    "severity": "HIGH",
+    "keywords": [
+      "path traversal",
+      "directory traversal",
+      "file upload",
+      "os.path",
+      "open file",
+      "filename validation"
+    ]
+  },
+  {
+    "rule_id": "SEC-05",
+    "category": "Security",
+    "title": "Cryptographically Secure Random Generation",
+    "description": "Use cryptographically secure pseudo-random number generators (e.g., secrets module) rather than standard random for security tokens, passwords, or salts.",
+    "bad_example": "token = ''.join(random.choices(string.ascii_letters, k=32))",
+    "good_example": "token = secrets.token_hex(16)",
+    "severity": "MEDIUM",
+    "keywords": [
+      "random",
+      "cryptography",
+      "token generation",
+      "prng",
+      "secrets module",
+      "salt"
+    ]
+  },
+  {
+    "rule_id": "LOGIC-01",
+    "category": "Logic & Reliability",
+    "title": "Boundary Condition and Off-by-One Handling",
+    "description": "Check boundary limits in loop conditions, array slicing, and pagination logic to prevent off-by-one errors and IndexOutOfBounds exceptions.",
+    "bad_example": "for i in range(len(arr) + 1): process(arr[i])",
+    "good_example": "for i in range(len(arr)): process(arr[i])",
+    "severity": "HIGH",
+    "keywords": [
+      "off by one",
+      "boundary check",
+      "index out of bounds",
+      "range",
+      "array indexing",
+      "pagination limit"
+    ]
+  },
+  {
+    "rule_id": "LOGIC-02",
+    "category": "Logic & Reliability",
+    "title": "Null / None Defensive Checking",
+    "description": "Always check for None or null before accessing object attributes or calling methods on optional return values.",
+    "bad_example": "user = find_user(user_id); return user.profile.email",
+    "good_example": "user = find_user(user_id); return user.profile.email if user and user.profile else None",
+    "severity": "HIGH",
+    "keywords": [
+      "null pointer",
+      "none check",
+      "attributeerror",
+      "optional value",
+      "defensive programming",
+      "null reference"
+    ]
+  },
+  {
+    "rule_id": "LOGIC-03",
+    "category": "Logic & Reliability",
+    "title": "Mutable Default Arguments in Function Signatures",
+    "description": "Never use mutable data types (e.g. lists, dicts) as default parameter values in function definitions in Python, as they persist across function calls.",
+    "bad_example": "def append_item(item, target_list=[]): target_list.append(item); return target_list",
+    "good_example": "def append_item(item, target_list=None): if target_list is None: target_list = []; target_list.append(item); return target_list",
+    "severity": "MEDIUM",
+    "keywords": [
+      "mutable default",
+      "default argument",
+      "function signature",
+      "list default",
+      "dict default",
+      "python trap"
+    ]
+  },
+  {
+    "rule_id": "LOGIC-04",
+    "category": "Logic & Reliability",
+    "title": "Exception Handling Specificity and Preservation",
+    "description": "Avoid catching bare Exception or pass blocks without logging. Catch specific exceptions and preserve tracebacks or log error context.",
+    "bad_example": "try: do_work() except: pass",
+    "good_example": "try: do_work() except (IOError, ValueError) as e: logger.error('Work failed: %s', e); raise",
+    "severity": "HIGH",
+    "keywords": [
+      "bare except",
+      "exception handling",
+      "try catch",
+      "pass block",
+      "swallowed exception",
+      "logging"
+    ]
+  },
+  {
+    "rule_id": "PERF-01",
+    "category": "Performance",
+    "title": "Deterministic Resource Cleanup and Context Managers",
+    "description": "Always use context managers (with statements or try-finally) when handling files, network sockets, or database connections to avoid resource leakage.",
+    "bad_example": "f = open('data.txt', 'r'); content = f.read()",
+    "good_example": "with open('data.txt', 'r') as f: content = f.read()",
+    "severity": "HIGH",
+    "keywords": [
+      "resource leak",
+      "context manager",
+      "file descriptor",
+      "socket leak",
+      "with statement",
+      "cleanup"
+    ]
+  },
+  {
+    "rule_id": "PERF-02",
+    "category": "Performance",
+    "title": "Avoid N+1 Database Query Anti-pattern",
+    "description": "Avoid executing individual database queries inside a loop. Use eager loading, joined loads, or bulk fetch with IN operators.",
+    "bad_example": "for order in orders: customer = db.query(Customer).get(order.customer_id)",
+    "good_example": "orders = db.query(Order).options(joinedload(Order.customer)).all()",
+    "severity": "HIGH",
+    "keywords": [
+      "n+1 query",
+      "database performance",
+      "bulk fetch",
+      "eager loading",
+      "orm optimization",
+      "loop query"
+    ]
+  },
+  {
+    "rule_id": "PERF-03",
+    "category": "Performance",
+    "title": "Efficient String Concatenation and Memory Usage",
+    "description": "Avoid repeated string concatenation in loops with the + operator. Use list appending and str.join() or string buffers for O(n) memory allocation.",
+    "bad_example": "res = ''; for s in large_strings: res += s",
+    "good_example": "res = ''.join(large_strings)",
+    "severity": "MEDIUM",
+    "keywords": [
+      "string concatenation",
+      "memory allocation",
+      "join",
+      "string buffer",
+      "loop overhead"
+    ]
+  },
+  {
+    "rule_id": "SQA-01",
+    "category": "Maintainability",
+    "title": "Cyclomatic Complexity Control",
+    "description": "Keep method cyclomatic complexity under 10. Split large, deeply nested control structures into modular helper functions for testability.",
+    "bad_example": "def handle_process(): # 6 levels of nested if/for loops and 300 LOC",
+    "good_example": "def handle_process(): validate_input(); step_one(); step_two()",
+    "severity": "MEDIUM",
+    "keywords": [
+      "cyclomatic complexity",
+      "nested loops",
+      "clean code",
+      "refactoring",
+      "method size",
+      "testability"
+    ]
+  },
+  {
+    "rule_id": "SQA-02",
+    "category": "Maintainability",
+    "title": "Comprehensive Unit Test Coverage for PRs",
+    "description": "Every Pull Request introducing new business logic or bug fixes must include corresponding automated unit tests covering both happy and edge cases.",
+    "bad_example": "# PR changes payment logic in 5 files with 0 tests added",
+    "good_example": "# PR includes tests/test_payment.py covering success, failed payment, and timeout scenarios",
+    "severity": "HIGH",
+    "keywords": [
+      "unit test",
+      "test coverage",
+      "automated testing",
+      "regression test",
+      "edge case testing"
+    ]
+  },
+  {
+    "rule_id": "SQA-03",
+    "category": "Maintainability",
+    "title": "Documentation and Type Annotations",
+    "description": "Public APIs, service methods, and exported interfaces must include clear docstrings and typing annotations describing inputs, outputs, and raised errors.",
+    "bad_example": "def calculate(a, b): return a * 0.15 + b",
+    "good_example": "def calculate_tax(subtotal: float, rate: float = 0.15) -> float: '''Calculate tax amount based on subtotal.''' return subtotal * rate",
+    "severity": "LOW",
+    "keywords": [
+      "docstrings",
+      "type annotations",
+      "documentation",
+      "clean code",
+      "pep 484",
+      "api documentation"
+    ]
+  }
+]

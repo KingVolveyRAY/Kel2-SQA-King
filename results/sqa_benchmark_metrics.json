@@ -1,0 +1,41 @@
+{
+  "Baseline_Static": {
+    "TP": 18,
+    "FP": 0,
+    "FN": 52,
+    "TN": 30,
+    "Accuracy": 0.48,
+    "Precision": 1.0,
+    "Recall": 0.2571,
+    "Specificity": 1.0,
+    "Hallucination_Rate": 0.0,
+    "F1_Score": 0.4091,
+    "MCC": 0.3067
+  },
+  "Vanilla_LLM": {
+    "TP": 69,
+    "FP": 12,
+    "FN": 1,
+    "TN": 18,
+    "Accuracy": 0.87,
+    "Precision": 0.8519,
+    "Recall": 0.9857,
+    "Specificity": 0.6,
+    "Hallucination_Rate": 0.4,
+    "F1_Score": 0.9139,
+    "MCC": 0.6842
+  },
+  "Oracle_Vector_RAG": {
+    "TP": 68,
+    "FP": 0,
+    "FN": 2,
+    "TN": 30,
+    "Accuracy": 0.98,
+    "Precision": 1.0,
+    "Recall": 0.9714,
+    "Specificity": 1.0,
+    "Hallucination_Rate": 0.0,
+    "F1_Score": 0.9855,
+    "MCC": 0.9543
+  }
+}
