@@ -6,6 +6,7 @@
 **Mata Kuliah:** Software Quality Assurance (SQA)  
 **Topik Tugas:** LLM - Code Review - Mandiri (Pendekatan ATM: Amati, Tiru, Modifikasi)  
 **Dosen Pengampu:** Rizal Broer Bahaweres, S.Kom., M.Kom. (`rizalbroer@uinjkt.ac.id`)  
+**Penyusun / Mahasiswa:** Muhammad Rayhan Ramadhan (NIM: 12409011010003) - Kelompok 2 SQA  
 **Repositori GitHub:** [https://github.com/KingVolveyRAY/Kel2-SQA-King.git](https://github.com/KingVolveyRAY/Kel2-SQA-King.git)  
 **Branch:** `uas-llm-code-review-oracle-rag`  
 

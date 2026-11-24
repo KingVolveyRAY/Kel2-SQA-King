@@ -51,7 +51,7 @@ class NumberedCanvas(canvas.Canvas):
         
         # Footer
         self.line(54, 45, A4[0] - 54, 45)
-        self.drawString(54, 32, "Kelompok 2 SQA | Repositori: github.com/KingVolveyRAY/Kel2-SQA-King")
+        self.drawString(54, 32, "Muhammad Rayhan Ramadhan (12409011010003) | github.com/KingVolveyRAY/Kel2-SQA-King")
         self.drawRightString(A4[0] - 54, 32, f"Halaman {self._pageNumber} dari {total_pages}")
         self.restoreState()
 
@@ -193,7 +193,7 @@ def build_pdf_report(output_filename="LAPORAN_UAS_SQA_LENGKAP.pdf"):
         [Paragraph("<b>Mata Kuliah:</b>", style_td_bold), Paragraph("Software Quality Assurance (SQA)", style_td)],
         [Paragraph("<b>Topik Tugas:</b>", style_td_bold), Paragraph("LLM - Code Review - Mandiri (Metode ATM: Amati, Tiru, Modifikasi)", style_td)],
         [Paragraph("<b>Dosen Pengampu:</b>", style_td_bold), Paragraph("Rizal Broer Bahaweres, S.Kom., M.Kom. (<code>rizalbroer@uinjkt.ac.id</code>)", style_td)],
-        [Paragraph("<b>Kelompok / Penulis:</b>", style_td_bold), Paragraph("Kelompok 2 SQA", style_td)],
+        [Paragraph("<b>Penyusun / Mahasiswa:</b>", style_td_bold), Paragraph("<b>Muhammad Rayhan Ramadhan</b> (NIM: <b>12409011010003</b>)<br/>Kelompok 2 SQA", style_td)],
         [Paragraph("<b>Repositori GitHub:</b>", style_td_bold), Paragraph("https://github.com/KingVolveyRAY/Kel2-SQA-King.git", style_td)],
         [Paragraph("<b>Branch Pengerjaan:</b>", style_td_bold), Paragraph("<code>uas-llm-code-review-oracle-rag</code>", style_td)]
     ]

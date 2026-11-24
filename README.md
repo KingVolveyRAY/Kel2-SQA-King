@@ -10,6 +10,7 @@
 > **Tugas Ujian Akhir Semester (UAS) Software Quality Assurance (SQA)**  
 > **Topik:** *LLM - Code Review - Mandiri (Pendekatan ATM: Amati, Tiru, Modifikasi)*  
 > **Dosen Pengampu:** Rizal Broer Bahaweres, S.Kom., M.Kom. (`rizalbroer@uinjkt.ac.id`)  
+> **Penyusun / Mahasiswa:** Muhammad Rayhan Ramadhan (NIM: 12409011010003) - Kelompok 2 SQA  
 > **Repositori Resmi:** [https://github.com/KingVolveyRAY/Kel2-SQA-King.git](https://github.com/KingVolveyRAY/Kel2-SQA-King.git)  
 > **Branch Pengerjaan:** `uas-llm-code-review-oracle-rag`  
 
@@ -200,6 +201,6 @@ FETCH FIRST 2 ROWS ONLY;
 
 ## ✉️ Kontak & Pengumpulan
 
-- **Penulis / Mahasiswa:** Tim Kelompok 2 SQA
+- **Penulis / Mahasiswa:** Muhammad Rayhan Ramadhan (NIM: 12409011010003) - Kelompok 2 SQA
 - **Dosen Pengampu:** Rizal Broer Bahaweres, S.Kom., M.Kom. (`rizalbroer@uinjkt.ac.id`)
 - **Tujuan Pengumpulan:** Repositori GitHub & Portal Microsoft Teams SQA
